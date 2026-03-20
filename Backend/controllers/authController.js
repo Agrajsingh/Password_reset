@@ -54,7 +54,7 @@ exports.forgotPassword = async (req, res) => {
       },
     });
 
-    const resetUrl = `http://localhost:5173/reset-password/${token}`;
+    const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/#/reset-password/${token}`;
     const mailOptions = {
       from: '"Secure Auth" <no-reply@secureauth.com>',
       to: user.email,
