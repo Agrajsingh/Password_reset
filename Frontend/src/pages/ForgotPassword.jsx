@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { toast } from 'react-toastify';
 
 const ForgotPassword = () => {
@@ -10,7 +9,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/users/forgot-password', { email });
+      const response = await api.post('/api/auth/forgot-password', { email });
       toast.success(response.data.message);
       setEmail('');
     } catch (error) {
