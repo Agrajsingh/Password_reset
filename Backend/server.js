@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.options("*", cors()); // Enable preflight for all routes
 
 // Logging middleware
 app.use((req, res, next) => {
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 // Direct routes for testing (Bypassing router)
 const { register, forgotPassword, resetPassword } = require("./controllers/authController");
 app.post("/api/auth/register", register);
+app.get("/api/auth/register", (req, res) => res.json({ message: "GET /api/auth/register works. Use POST for registration." }));
 app.post("/api/auth/forgot-password", forgotPassword);
 app.post("/api/auth/reset-password", resetPassword);
 
