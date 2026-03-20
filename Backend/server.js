@@ -15,7 +15,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Primary Routes (Moved to Top)
+// Direct routes for testing (Bypassing router)
+const { register, forgotPassword, resetPassword } = require("./controllers/authController");
+app.post("/api/auth/register", register);
+app.post("/api/auth/forgot-password", forgotPassword);
+app.post("/api/auth/reset-password", resetPassword);
+
 app.use("/api/auth", authRoutes);
 
 // Test routes (Direct)
