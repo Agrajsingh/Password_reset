@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../api';
 import { Form, Button, Card, Container, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -78,9 +79,9 @@ const ForgotPassword = () => {
                         </Form>
 
                         <div className="text-center mt-4">
-                            <a href="/register" className="text-decoration-none small fw-bold">
+                            <Link to="/register" className="text-decoration-none small fw-bold">
                                 <i className="bi bi-arrow-left me-1"></i> Back to Register
-                            </a>
+                            </Link>
                         </div>
                     </Card.Body>
                 </Card>

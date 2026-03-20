@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../api';
 import { Form, Button, Card, Container, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -98,9 +99,9 @@ const Register = () => {
                         </Form>
 
                         <div className="text-center mt-4">
-                            <a href="/forgot-password" className="text-decoration-none small fw-bold">
+                            <Link to="/forgot-password" className="text-decoration-none small fw-bold">
                                 Already have an account? Login / Reset Password
-                            </a>
+                            </Link>
                         </div>
                     </Card.Body>
                 </Card>
