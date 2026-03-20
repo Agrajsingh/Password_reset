@@ -16,6 +16,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Global API prefix handler (Debugging)
+app.use("/api", (req, res, next) => {
+  console.log(`API request received: ${req.method} ${req.originalUrl}`);
+  // If it's a test link, just return the info
+  if (req.path === "/test-direct" || req.path === "/auth-check") {
+    return res.json({ message: "API prefix is working", url: req.originalUrl });
+  }
+  next();
+});
+
 // Direct routes for testing (Bypassing router)
 const { register, forgotPassword, resetPassword } = require("./controllers/authController");
 app.post("/api/auth/register", register);
