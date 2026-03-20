@@ -15,6 +15,12 @@ app.use((req, res, next) => {
   next();
 });
 
+// Primary Routes (Moved to Top)
+app.use("/api/auth", authRoutes);
+
+// Test routes (Direct)
+app.get("/api/test-direct", (req, res) => res.json({ message: "Direct test works" }));
+
 // Connect to MongoDB
 mongoose
   .connect(
@@ -22,12 +28,6 @@ mongoose
   )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
-
-app.use("/api/auth", authRoutes);
-
-app.get("/api/auth-check", (req, res) => {
-  res.json({ message: "Direct API check is working" });
-});
 
 app.get("/", (req, res) => {
   res.send("API is running...");
