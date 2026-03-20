@@ -37,5 +37,15 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
+// Catch-all 404 handler
+app.use((req, res) => {
+  console.log(`404 at ${req.method} ${req.url}`);
+  res.status(404).json({
+    message: "Route not found",
+    receivedUrl: req.url,
+    receivedMethod: req.method
+  });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
