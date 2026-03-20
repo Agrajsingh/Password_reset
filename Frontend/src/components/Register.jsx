@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { Form, Button, Card, Container, Alert } from 'react-bootstrap';
 
 const Register = () => {
@@ -15,7 +14,7 @@ const Register = () => {
         setMessage('');
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+            const res = await api.post('/api/auth/register', { email, password });
             setMessage(res.data.message);
             setEmail('');
             setPassword('');

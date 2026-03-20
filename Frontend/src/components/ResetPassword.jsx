@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Card, Container, Alert } from 'react-bootstrap';
 
@@ -23,7 +22,7 @@ const ResetPassword = () => {
         setMessage('');
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/reset-password', { token, newPassword: password });
+            const res = await api.post('/api/auth/reset-password', { token, newPassword: password });
             setMessage(res.data.message);
             setTimeout(() => navigate('/login'), 3000);
         } catch (err) {
