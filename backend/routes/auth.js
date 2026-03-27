@@ -99,9 +99,21 @@ router.post('/forgot-password', async (req, res) => {
 
         await sendEmail(mailOptions);
         
-        res.status(200).json({ message: 'Email sent successfully!' });
+        res.status(200).json({ 
+            message: 'Email sent successfully!',
+            resetUrl: process.env.NODE_ENV === 'production' ? null : resetUrl // Return URL for development
+        });
     } catch (error) {
-        console.error(error);
+        console.error("Email sending failed:", error);
+        
+        // Even if email fails, return the URL in dev so the flow can be tested
+        if (process.env.NODE_ENV !== 'production') {
+            return res.status(200).json({
+                message: 'Email sending failed, but here is your link (Development Only):',
+                resetUrl: resetUrl
+            });
+        }
+        
         if (user) {
             user.resetToken = null;
             user.resetTokenExpiry = null;
