@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Container, Form, Alert, Spinner } from 'react-bootstrap';
 import { FiLogOut } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,12 +19,12 @@ const Login = () => {
     setError('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const { data } = await api.post('/auth/login', { email, password });
       setMessage(data.message);
       // Save token in localStorage
       localStorage.setItem('token', data.token);
       setTimeout(() => {
-          navigate('/forgot-password'); // Or ideally navigated to a dashboard route!
+          navigate('/dashboard'); // Or ideally navigated to a dashboard route!
       }, 1000);
     } catch (err) {
       setError(err.response?.data?.message || 'Invalid credentials.');

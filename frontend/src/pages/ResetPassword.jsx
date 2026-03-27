@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import api from '../utils/api';
 import { Container, Form, Alert, Spinner } from 'react-bootstrap';
 import { FiLock } from 'react-icons/fi';
 
@@ -26,7 +26,7 @@ const ResetPassword = () => {
     setError('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/reset-password', {
+      const { data } = await api.post('/auth/reset-password', {
         token,
         newPassword
       });

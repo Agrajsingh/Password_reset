@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { Container, Form, Alert, Spinner } from 'react-bootstrap';
 import { FiUserPlus } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
@@ -19,7 +19,7 @@ const Register = () => {
     setError('');
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/register', { email, password });
+      const { data } = await api.post('/auth/register', { email, password });
       setMessage(data.message);
       setTimeout(() => {
           navigate('/login');
