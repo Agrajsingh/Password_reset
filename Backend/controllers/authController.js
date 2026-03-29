@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 // Register API
 exports.register = async (req, res) => {
@@ -113,5 +115,34 @@ exports.resetPassword = async (req, res) => {
   } catch (err) {
     console.error(`Error in resetPassword: ${err.message}`);
     res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+// Login API
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  console.log(`Received login request for: ${email}`);
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log(`Login failed, user not found: ${email}`);
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      console.log(`Login failed, incorrect password for: ${email}`);
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "fallback_secret", {
+      expiresIn: "1h",
+    });
+
+    console.log(`Successfully logged in user: ${email}`);
+    res.json({ message: "Login successful", token, user: { id: user._id, email: user.email } });
+  } catch (err) {
+    console.error(`Error in login: ${err.message}`);
+    res.status(500).json({ message: "Server error during login", error: err.message });
   }
 };
